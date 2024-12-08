@@ -1,0 +1,62 @@
+package br.com.beltis.service;
+
+import br.com.beltis.model.Projeto;
+import br.com.beltis.model.Tarefa;
+import br.com.beltis.repository.ProjetoRepository;
+import br.com.beltis.repository.TarefaRepository;
+import br.com.beltis.utils.MensagemException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
+
+@Service
+public class TarefaService {
+
+    public static final Logger LOG = LoggerFactory.getLogger(ProjetoService.class);
+
+    @Autowired
+    private TarefaRepository tarefaRepository;
+
+
+    public Tarefa adicionarTarefa(Tarefa tarefa) {
+        try {
+            tarefaRepository.adicionarTarefa(tarefa);
+            return tarefa;
+        } catch (Exception exception) {
+            LOG.error(exception.getMessage());
+            throw new MensagemException("Erro ao adicionar tarefa.");
+        }
+    }
+
+    public Tarefa editarTarefa(Tarefa tarefa) {
+        try {
+            tarefaRepository.editarTarefa(tarefa);
+            return tarefa;
+        } catch (Exception exception) {
+            LOG.error(exception.getMessage());
+            throw new MensagemException("Erro ao editar tarefa.");
+        }
+    }
+
+    public void excluirTarefa(Long tarefaId) {
+        try {
+            tarefaRepository.excluirTarefa(tarefaId);
+        } catch (Exception exception) {
+            LOG.error(exception.getMessage());
+            throw new MensagemException("Erro ao excluir tarefa com ID: " + tarefaId);
+        }
+    }
+
+    public List<Tarefa> listarTarefasPorProjeto(Long projetoId) {
+        try {
+            return tarefaRepository.listarTarefasPorProjeto(projetoId);
+        } catch (Exception exception) {
+            LOG.error(exception.getMessage());
+            throw new MensagemException("Erro ao listar tarefas por projeto com ID: " + projetoId);
+        }
+    }
+}
