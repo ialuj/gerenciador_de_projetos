@@ -52,6 +52,10 @@ public class ProjetoController {
         }
     }
 
+    public void editarProjeto(Projeto projeto) {
+
+    }
+
     public void excluirProjeto(Long id) {
         try {
             projetoService.excluirProjeto(id);

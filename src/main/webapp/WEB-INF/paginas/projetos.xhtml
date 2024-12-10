@@ -12,23 +12,32 @@
     <h1>Cadastro de Projetos</h1>
 
     <h:form>
+        <h:messages globalOnly="true" />
         <rich:panel>
             <div>
             <h:outputLabel for="titulo" value="Título:" />
-            <h:inputText id="titulo" value="#{projetoController.projetoSelecionado.titulo}" required="true" label="Título" />
+                <br />
+                <h:inputText id="titulo" value="#{projetoController.projetoSelecionado.titulo}" required="true" label="Título" validatorMessage="Insira o Titulo do Projeto.">
+                    <f:validateLength minimum="5" />
+                </h:inputText>
             </div>
+            <br />
 
             <div>
             <h:outputLabel for="descricao" value="Descrição:" />
-            <h:inputTextarea id="descricao" value="#{projetoController.projetoSelecionado.descricao}" required="true" label="Descrição" rows="5" cols="30" />
+                <br />
+            <h:inputText id="descricao" value="#{projetoController.projetoSelecionado.descricao}" label="Descrição" />
             </div>
+            <br />
 
             <div>
             <h:outputLabel for="dataInicio" value="Data de Início:" />
-            <h:inputText id="dataInicio" value="#{projetoController.projetoSelecionado.dataInicio}" required="true" label="Data de Início">
+                <br />
+            <h:inputText id="dataInicio" value="#{projetoController.projetoSelecionado.dataInicio}" required="true" label="Data de Início" validatorMessage="Insira a Data de Inicio do Projeto.">
                 <f:convertDateTime pattern="dd/MM/yyyy" />
             </h:inputText>
             </div>
+            <br />
 
             <div>
             <h:commandButton value="Adicionar Projeto" action="#{projetoController.adicionarProjeto()}" />
@@ -41,6 +50,7 @@
 
     <h:form>
         <h:outputText value="Lista de Projetos" />
+        <br />
 
         <rich:dataTable value="#{projetoController.projetos}" var="projeto" id="projetos">
             <rich:column>
@@ -61,6 +71,9 @@
             <rich:column>
                 <f:facet name="header">Ações</f:facet>
                 <h:commandButton value="Visualizar" action="#{projetoController.listarProjetos()}" />
+                <span />
+                <h:commandButton value="Editar" action="#{projetoController.editarProjeto(projeto)}" />
+                <span />
                 <h:commandButton value="Excluir" action="#{projetoController.excluirProjeto(projeto.id)}" />
             </rich:column>
         </rich:dataTable>
@@ -71,5 +84,6 @@
         <rich:menuItem label="Voltar ao Início" action="#{navigationBean.inicio()}" />
     </rich:panel>
     </h:form>
+
 </h:body>
 </html>

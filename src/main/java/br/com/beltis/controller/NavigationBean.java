@@ -8,15 +8,15 @@ import javax.faces.bean.RequestScoped;
 public class NavigationBean {
 
     public String inicio() {
-        return "index.xhtml?faces-redirect=true";
+        return "home";
     }
 
     public String produtos() {
-        return "/WEB-INF/paginas/projetos.xhtml?faces-redirect=true";
+        return "projetos";
     }
 
     public String tarefas() {
-        return "/WEB-INF/paginas/tarefas.xhtml?faces-redirect=true";
+        return "tarefas";
     }
 }
 
