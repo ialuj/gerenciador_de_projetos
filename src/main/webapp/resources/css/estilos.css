@@ -1,0 +1,36 @@
+form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaço entre os elementos */
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px; /* Espaço entre o rótulo e o campo */
+}
+
+form input[type="text"], form textarea, form button {
+    width: 100%; /* Faz os campos ocuparem a largura completa */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form textarea {
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+}
+
+form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}

@@ -1,29 +1,24 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:a4j="http://richfaces.org/a4j"
-      xmlns:rich="http://richfaces.org/rich">
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:rich="http://richfaces.org/rich"
+        xmlns:a4j="http://richfaces.org/a4j">
+    <h:head>
+        <title>Sistema de Gerenciamento de Projetos</title>
+    </h:head>
 
-<h:head>
-    <title>Sistema de Gerenciamento de Projetos</title>
-</h:head>
+    <h:body>
+        <h1>Bem-vindo ao Sistema de Gerenciamento de Projetos</h1>
 
-<h:body>
-    <h1>Bem-vindo ao Sistema de Gerenciamento de Projetos</h1>
+        <h:form>
+        <rich:panel id="menuPanel" header="Menu de Navegação">
+            <rich:menuItem label="Projetos" action="projetos" />
+            <rich:menuItem label="Tarefas" action="tarefas" />
+        </rich:panel>
+        </h:form>
 
-    <rich:panel header="Menu de Navegação">
-        <rich:menu>
-            <rich:menuItem value="Início" action="index.xhtml" />
-            <rich:menuItem value="Produtos" action="/WEB-INF/paginas/produtos.xhtml" />
-            <rich:menuItem value="Tarefas" action="/WEB-INF/paginas/tarefas.xhtml" />
-        </rich:menu>
-    </rich:panel>
+        <br />
 
-    <h:br />
-
-    <h:outputText value="Selecione uma opção no menu acima." />
-</h:body>
+        <h:outputText value="Selecione uma opção no menu acima." />
+    </h:body>
 </html>
-

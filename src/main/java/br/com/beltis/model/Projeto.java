@@ -24,7 +24,7 @@ public class Projeto implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "titulo", nullable = false, length = 5)
+    @Column(name = "titulo", nullable = false)
     private String titulo;
 
     @Column(name = "descricao")
@@ -41,6 +41,13 @@ public class Projeto implements Serializable {
     }
 
     public Projeto(String titulo, String descricao, Date dataInicio) {
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.dataInicio = dataInicio;
+    }
+
+    public Projeto(Long id, String titulo, String descricao, Date dataInicio) {
+        this.id = id;
         this.titulo = titulo;
         this.descricao = descricao;
         this.dataInicio = dataInicio;

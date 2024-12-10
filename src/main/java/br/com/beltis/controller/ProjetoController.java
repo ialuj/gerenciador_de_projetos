@@ -2,19 +2,22 @@ package br.com.beltis.controller;
 
 import br.com.beltis.model.Projeto;
 import br.com.beltis.service.ProjetoService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
+import javax.faces.bean.RequestScoped;
 import javax.faces.context.FacesContext;
 import java.util.List;
 
-@ManagedBean(name = "projetoController")
-@RequestScoped
 @Controller
+@RequestScoped
 public class ProjetoController {
+
+    public static final Logger LOG = LoggerFactory.getLogger(ProjetoController.class);
 
     @Autowired
     private ProjetoService projetoService;
@@ -22,7 +25,11 @@ public class ProjetoController {
     private Projeto projetoSelecionado = new Projeto();
     private List<Projeto> projetos;
 
-    public ProjetoController() {
+    @PostConstruct
+    public void init() {
+        if (projetoService == null) {
+            throw new IllegalStateException("projetoService was not injected.");
+        }
         listarProjetos();
     }
 
@@ -58,7 +65,9 @@ public class ProjetoController {
     }
 
     public void listarProjetos() {
+        LOG.info("Lista de Projetos");
         projetos = projetoService.listarProjetos();
+        LOG.info("Projetos encontrados - " + projetos.size());
     }
 
     // Getters e Setters
@@ -72,6 +81,10 @@ public class ProjetoController {
 
     public List<Projeto> getProjetos() {
         return projetos;
+    }
+
+    public void setProjetos(List<Projeto> projetos) {
+        this.projetos = projetos;
     }
 }
 

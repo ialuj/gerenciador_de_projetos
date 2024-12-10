@@ -2,4 +2,35 @@
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xi="http://www.w3.org/2001/XInclude"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
 
+    <application>
+        <el-resolver>org.springframework.web.jsf.el.SpringBeanFacesELResolver</el-resolver>
+    </application>
+
+    <managed-bean>
+        <managed-bean-name>projetoController</managed-bean-name>
+        <managed-bean-class>br.com.beltis.controller.ProjetoController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+    <managed-bean>
+        <managed-bean-name>tarefaController</managed-bean-name>
+        <managed-bean-class>br.com.beltis.controller.TarefaController</managed-bean-class>
+        <managed-bean-scope>request</managed-bean-scope>
+    </managed-bean>
+
+    <navigation-rule>
+        <from-view-id>*</from-view-id>
+        <navigation-case>
+            <from-outcome>home</from-outcome>
+            <to-view-id>/index.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>projetos</from-outcome>
+            <to-view-id>/WEB-INF/paginas/projetos.xhtml</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>tarefas</from-outcome>
+            <to-view-id>/WEB-INF/paginas/tarefas.xhtml</to-view-id>
+        </navigation-case>
+    </navigation-rule>
+
 </faces-config>

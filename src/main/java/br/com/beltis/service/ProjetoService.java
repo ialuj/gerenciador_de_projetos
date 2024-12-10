@@ -53,7 +53,7 @@ public class ProjetoService {
             return projetoRepository.listarProjetos();
         } catch (Exception exception) {
             LOG.error(exception.getMessage());
-            throw new MensagemException("Erro ao listar projetos.");
+            throw new MensagemException("Erro ao listar projetos. "+exception.getMessage());
         }
     }
 }
