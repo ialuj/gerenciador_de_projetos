@@ -14,9 +14,9 @@
     <!-- DataSource Bean -->
     <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
         <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-        <property name="jdbcUrl" value="jdbc:mysql://localhost:3321/gerenciador_projetos"/>
-        <property name="username" value="root"/>
-        <property name="password" value="gNZUV/c+P0lOeJlw7pTJfnWuS7VMF1a+"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:porta/basededados"/>
+        <property name="username" value="usuariodabasededados"/>
+        <property name="password" value="senhadabasededados"/>
         <property name="maximumPoolSize" value="10"/>
     </bean>
 

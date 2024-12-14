@@ -36,4 +36,5 @@ Após a execução do comando acima, note que gerou-se uma pasta "target", pode 
 Para Apache Tomcat jogue o arquivo com a extensão .war na pasta webapps.
 
 Antes de executar o projeto, lembre-se de deixar o Sistema de Gerenciamento de Base de Dados online ou rodando, após isso pode executar o servidor aplicacional e verá que o
-Servidor Aplicacional abrirá automaticamente o navegador em http://localhost:8080/gerenciador_de_projetos e pode adicionar, editar, excluir e visualizar projetos e suas tarefas.
+Servidor Aplicacional abrirá automaticamente o navegador em http://localhost:8080/gerenciador_de_projetos (aqui a porta depende da configuração do seu servidor aplicacional)
+e pode adicionar, editar, excluir e visualizar projetos e suas tarefas.
