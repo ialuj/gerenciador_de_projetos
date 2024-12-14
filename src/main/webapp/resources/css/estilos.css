@@ -1,0 +1,92 @@
+form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaço entre os elementos */
+}
+
+form label {
+    font-weight: bold;
+    margin-bottom: 5px; /* Espaço entre o rótulo e o campo */
+}
+
+form input[type="text"], form textarea, form button {
+    width: 100%; /* Faz os campos ocuparem a largura completa */
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+form textarea {
+    resize: vertical; /* Permite redimensionar apenas verticalmente */
+}
+
+form button {
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 10px 15px;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+form button:hover {
+    background-color: #0056b3;
+}
+
+.rf-pp-cntr {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 20px;
+    width: 300px;
+    text-align: center;
+}
+
+/* Estilos do Popup */
+.popup {
+    display: none; /* Inicialmente oculto */
+    position: fixed;
+    z-index: 9999; /* Garante que o popup fique acima do conteúdo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo semi-transparente */
+    justify-content: center;
+    align-items: center;
+    overflow: auto;
+}
+
+.popup-content {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    width: 50%;
+    max-width: 600px;
+}
+
+.popup-header {
+    font-size: 1.5em;
+    margin-bottom: 10px;
+}
+
+.popup-body {
+    margin-top: 20px;
+}
+
+.popup-body h4 {
+    margin: 10px 0;
+}
+
+/* Botões */
+.popup .close-btn {
+    background-color: #ff0000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 20px;
+}

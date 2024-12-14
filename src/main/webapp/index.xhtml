@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+        xmlns:h="http://java.sun.com/jsf/html"
+        xmlns:rich="http://richfaces.org/rich">
+    <h:head>
+        <title>Sistema de Gerenciamento de Projetos</title>
+    </h:head>
+
+    <h:body>
+        <h1>Bem-vindo ao Sistema de Gerenciamento de Projetos</h1>
+
+        <h:form>
+        <rich:panel id="menuPanel" header="Menu de Navegação">
+            <rich:menuItem label="Projetos" action="projetos" />
+            <rich:menuItem label="Tarefas" action="tarefas" />
+        </rich:panel>
+        </h:form>
+
+        <br />
+
+        <h:outputText value="Selecione uma opção no menu acima." />
+    </h:body>
+</html>

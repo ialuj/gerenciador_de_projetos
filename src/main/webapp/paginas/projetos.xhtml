@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Gerenciamento de Projetos</title>
+    <h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+
+<h:body>
+    <h1>Cadastro de Projetos</h1>
+
+    <h:form id="formProjetoInput">
+        <rich:panel>
+            <div>
+            <h:outputLabel for="titulo" value="Título:" />
+                <br />
+                <h:inputText id="titulo" value="#{projetoController.projetoSelecionado.titulo}"
+                             required="true" label="Título" requiredMessage="Insira o titulo do Projeto!">
+                    <f:validateLength minimum="5" />
+                </h:inputText>
+            </div>
+            <br />
+
+            <div>
+            <h:outputLabel for="descricao" value="Descrição:" />
+                <br />
+            <h:inputText id="descricao" value="#{projetoController.projetoSelecionado.descricao}" label="Descrição" />
+            </div>
+            <br />
+
+            <div>
+            <h:outputLabel for="dataInicio" value="Data de Início:" />
+                <br />
+            <h:inputText id="dataInicio"
+                         value="#{projetoController.projetoSelecionado.dataInicio}"
+                         required="true" label="Data de Início"
+                         requiredMessage="Insira a data de inicio do Projeto!">
+                <f:converter converterId="dateConverter" />
+            </h:inputText>
+            </div>
+            <br />
+
+            <div>
+                <h:commandButton id="salvarTarefaBtn"
+                                 value="#{projetoController.projetoSelecionado.id == null ? 'Adicionar Projeto' : 'Atualizar Projeto'}"
+                                 action="#{projetoController.salvarProjeto()}" />
+                <span />
+                <h:commandButton value="Limpar Campos" >
+                    <f:ajax listener="#{projetoController.limparCampos()}"
+                            render="formProjetoInput:titulo formProjetoInput:descricao formProjetoInput:dataInicio formProjetoInput:salvarTarefaBtn" />
+                </h:commandButton>
+            </div>
+        </rich:panel>
+    </h:form>
+
+    <br />
+
+    <h:form id="formProjetoLista">
+        <h:outputText value="Lista de Projetos" />
+        <br />
+
+        <rich:dataTable value="#{projetoController.projetos}" var="projeto" id="projetos">
+            <rich:column>
+                <f:facet name="header">Título</f:facet>
+                #{projeto.titulo}
+            </rich:column>
+
+            <rich:column>
+                <f:facet name="header">Descrição</f:facet>
+                #{projeto.descricao}
+            </rich:column>
+
+            <rich:column>
+                <f:facet name="header">Data de Início</f:facet>
+                #{projeto.dataInicio}
+            </rich:column>
+
+            <rich:column>
+                <f:facet name="header">Ações</f:facet>
+                <h:commandButton value="Visualizar"
+                                 action="#{projetoController.prepararProjetoParaVisualizar(projeto)}"
+                                 onclick="RichFaces.ui.PopupPanel.show('visualizacaoPopup'); return true;">
+                    <f:ajax render="visualizacaoPopup" />
+                    <f:setPropertyActionListener target="#{projetoController.projetoSelecionadoIdParaVisualizacao}" value="#{projeto.id}" />
+                </h:commandButton>
+                <span />
+                <h:commandButton value="Editar" action="#{projetoController.selecionarProjeto(projeto)}" />
+                <span />
+                <h:commandButton value="Excluir"
+                                 action="#{projetoController.prepararExclusao(projeto)}"
+                                 onclick="RichFaces.ui.PopupPanel.show('confirmacaoPopup');">
+                    <f:setPropertyActionListener target="#{projetoController.projetoSelecionadoId}" value="#{projeto.id}" />
+                    <f:ajax render="formProjetoLista confirmacaoPopup" />
+                </h:commandButton>
+            </rich:column>
+        </rich:dataTable>
+    </h:form>
+
+    <h:form id="formBtnInicio">
+    <rich:panel>
+        <rich:menuItem label="Voltar ao Início" action="#{navigationBean.inicio()}" />
+    </rich:panel>
+    </h:form>
+
+    <rich:popupPanel id="messagePopup" modal="true" autosized="true" show="#{not empty facesContext.maximumSeverity}">
+        <f:facet name="header">
+            <h:outputText value="Mensagem do Sistema" />
+        </f:facet>
+
+        <h:messages globalOnly="false" redisplay="true" style="color: #333;" />
+
+        <h:form>
+            <h:commandButton value="Fechar" onclick="RichFaces.ui.PopupPanel.hide('messagePopup'); return false;">
+                <f:ajax listener="#{projetoController.limparCampos()}"
+                        render="formProjetoInput:titulo formProjetoInput:descricao formProjetoInput:dataInicio formProjetoInput:salvarTarefaBtn" />
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+    <rich:popupPanel id="visualizacaoPopup"
+                     modal="true"
+                     rendered="#{projetoController.projetoSelecionadoIdParaVisualizacao != null}"
+                     show="#{projetoController.projetoSelecionadoIdParaVisualizacao != null ? 'true' : 'false'}"
+                     onmaskclick="#{rich:component('visualizacaoPopup')}.hide();"
+                     width="600" style="flex: content; align-items: center; justify-content: center; justify-items: center">
+        <f:facet name="header">
+            <h:outputText value="Detalhes do Projeto" />
+        </f:facet>
+
+        <h:form id="visualizacaoPopupForm">
+        <h:inputHidden id="projetoSelecionadoIdParaVisualizacao" value="#{projetoController.projetoSelecionadoIdParaVisualizacao}" />
+
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputText value="Titulo:" />
+            <h:outputText value="#{projetoController.projetoSelecionadoParaVisualizacao.titulo}" />
+
+            <h:outputText value="Descrição:" />
+            <h:outputText value="#{projetoController.projetoSelecionadoParaVisualizacao.descricao}" />
+
+            <h:outputText value="Data de Início:" />
+            <h:outputText value="#{projetoController.projetoSelecionadoParaVisualizacao.dataInicio}" />
+
+        </h:panelGrid>
+
+        <h:form id="tarefasForm">
+            <h:outputLabel value="Lista de Tarefas do Projeto" style="font-weight: bold" />
+            <br />
+            <br />
+            <rich:dataTable value="#{projetoController.projetoSelecionadoParaVisualizacao.tarefas}" var="tarefa" id="tarefas">
+                <rich:column>
+                    <f:facet name="header">Título</f:facet>
+                    #{tarefa.titulo}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Descrição</f:facet>
+                    #{tarefa.descricao}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Prioridade</f:facet>
+                    #{tarefa.prioridade.descricao}
+                </rich:column>
+                <rich:column>
+                    <f:facet name="header">Estimativas (Horas)</f:facet>
+                    #{tarefa.estimativaHoras}
+                </rich:column>
+            </rich:dataTable>
+        </h:form>
+        </h:form>
+
+        <h:form>
+            <h:commandButton value="Fechar"
+                             onclick="RichFaces.ui.PopupPanel.hide('visualizacaoPopup'); return false;"
+                             action="#{projetoController.fecharVisualizacaoPopup()}">
+                <f:ajax render="visualizacaoPopup" />
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+    <rich:popupPanel id="confirmacaoPopup"
+                     modal="true" autosized="true"
+                     rendered="#{projetoController.projetoSelecionadoId != null}"
+                     show="#{projetoController.projetoSelecionadoId != null ? 'true' : 'false'}"
+                     onmaskclick="#{rich:component('confirmacaoPopup')}.hide();"
+                     width="300" style="flex: content; align-items: center; justify-content: center; justify-items: center">
+        <f:facet name="header">
+            <h:outputText value="Confirmação de Exclusão" />
+        </f:facet>
+
+        <h:panelGrid columns="1" cellpadding="10">
+            <h:outputText value="Deseja realmente excluir este Projeto?" />
+        </h:panelGrid>
+
+        <h:form id="confirmacaoForm">
+
+            <h:inputHidden id="projetoSelecionadoId" value="#{projetoController.projetoSelecionadoId}" />
+
+            <h:commandButton value="Sim"
+                             action="#{projetoController.excluirProjeto}"
+                             onclick="RichFaces.ui.PopupPanel.hide('confirmacaoPopup'); return false;">
+                <f:ajax render="confirmacaoForm:projetoSelecionadoId" />
+            </h:commandButton>
+            <h:commandButton value="Não"
+                             action="#{projetoController.cancelarExclusao}"
+                             onclick="RichFaces.ui.PopupPanel.hide('confirmacaoPopup'); return false;">
+                <f:ajax render="confirmacaoForm:projetoSelecionadoId" />
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+</h:body>
+</html>

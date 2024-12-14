@@ -1,0 +1,250 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:rich="http://richfaces.org/rich"
+      xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+    <title>Gerenciamento de Tarefas de Projetos</title>
+    <h:outputStylesheet library="css" name="estilos.css" />
+</h:head>
+
+<h:body>
+    <h1>Cadastro de Tarefas</h1>
+
+    <h:form>
+        <rich:panel>
+            <div>
+                <h:outputLabel for="projeto" value="Selecione um Projeto:" />
+                <span /><span />
+                <h:selectOneMenu id="projeto" value="#{tarefaController.projetoSelecionado}"
+                                 label="Selecione um Projeto"
+                                 required="true" requiredMessage="Selecione um Projeto">
+                    <f:selectItem itemValue="" itemLabel="Selecione um Projeto" />
+                    <f:selectItems value="#{projetoController.projetos}" var="projeto"
+                                   itemValue="#{projeto}" itemLabel="#{projeto.titulo}" />
+                    <f:ajax event="valueChange"
+                            listener="#{tarefaController.listarTarefasPorProjeto()}"
+                            render="formTarefasLista" />
+                    <f:converter converter="projetoConverter" converterId="projetoConverter"/>
+                </h:selectOneMenu>
+            </div>
+        </rich:panel>
+    </h:form>
+
+    <h:form id="formTarefaInput">
+        <rich:panel>
+            <div>
+                <h:outputLabel for="titulo" value="Título:" />
+                <br />
+                <h:inputText id="titulo" value="#{tarefaController.tarefaSelecionada.titulo}"
+                             required="true" label="Título" requiredMessage="Insira o titulo da Tarefa!">
+                    <f:validateLength minimum="5" />
+                </h:inputText>
+            </div>
+            <br />
+
+            <div>
+                <h:outputLabel for="descricao" value="Descrição:" />
+                <br />
+                <h:inputText id="descricao" value="#{tarefaController.tarefaSelecionada.descricao}" label="Descrição" />
+            </div>
+            <br />
+
+            <div>
+                <h:outputLabel for="prioridade" value="Prioridade:" />
+                <span /><span />
+                <h:selectOneMenu id="prioridade"
+                                 value="#{tarefaController.tarefaSelecionada.prioridade}"
+                                 required="true" label="Prioridade"
+                                 requiredMessage="Indique a Prioridade da Tarefa!">
+                    <f:selectItem itemValue="" itemLabel="Selecione uma Prioridade" />
+                    <f:selectItems value="#{tarefaController.prioridades}" var="prioridade"
+                                   itemValue="#{prioridade}" itemLabel="#{prioridade.descricao}" />
+                    <f:ajax event="valueChange" />
+                </h:selectOneMenu>
+            </div>
+            <br />
+
+            <div>
+                <h:outputLabel for="estimativa" value="Estimativas (Horas):" />
+                <br />
+                <br />
+                <h:inputText id="estimativa"
+                             value="#{tarefaController.tarefaSelecionada.estimativaHoras}"
+                             required="true" label="Estimativas (Horas)"
+                             requiredMessage="Insira a Estimativa (em Horas) da Tarefa!">
+                    <f:validateLongRange minimum="1" />
+                    <f:converter converterId="integerConverter" />
+                </h:inputText>
+            </div>
+            <br />
+
+            <div>
+                <h:commandButton id="salvarTarefaBtn"
+                                 value="#{tarefaController.tarefaSelecionada.id == null ? 'Adicionar Tarefa' : 'Atualizar Tarefa'}"
+                                 action="#{tarefaController.salvarTarefa()}" />
+                <span /><span />
+                <h:commandButton value="Limpar Campos" >
+                    <f:ajax listener="#{tarefaController.limparCampos()}"
+                            render="formTarefaInput:titulo formTarefaInput:descricao formTarefaInput:dataInicio formTarefaInput:estimativa formTarefaInput:salvarTarefaBtn" />
+                </h:commandButton>
+            </div>
+        </rich:panel>
+    </h:form>
+    <br />
+
+    <h:form id="formTarefasLista">
+        <h:outputText value="Lista de Tarefas do Projeto" />
+        <br />
+
+        <rich:dataTable value="#{tarefaController.tarefas}" var="tarefa" id="tarefas" resetValues="true">
+            <rich:column>
+                <f:facet name="header">Título</f:facet>
+                #{tarefa.titulo}
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Descrição</f:facet>
+                #{tarefa.descricao}
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Prioridade</f:facet>
+                #{tarefa.prioridade.descricao}
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Estimativas (Horas)</f:facet>
+                #{tarefa.estimativaHoras}
+            </rich:column>
+            <rich:column>
+                <f:facet name="header">Ações</f:facet>
+                <h:commandButton value="Visualizar"
+                                 action="#{tarefaController.prepararTarefaParaVisualizar(tarefa)}"
+                                 onclick="RichFaces.ui.PopupPanel.show('visualizacaoPopup'); return true;">
+                    <f:ajax render="visualizacaoPopup" />
+                    <f:setPropertyActionListener target="#{tarefaController.tarefaSelecionadaIdParaVisualizacao}" value="#{tarefa.id}" />
+                </h:commandButton>
+                <span />
+                <h:commandButton value="Editar" action="#{tarefaController.selecionarTarefa(tarefa)}" />
+                <span />
+                <h:commandButton value="Excluir"
+                                 action="#{tarefaController.prepararExclusao(tarefa)}"
+                                 onclick="RichFaces.ui.PopupPanel.show('confirmacaoPopup');">
+                    <f:setPropertyActionListener target="#{tarefaController.tarefaSelecionadaId}" value="#{tarefa.id}" />
+                    <f:ajax render="formTarefasLista confirmacaoPopup" />
+                </h:commandButton>
+            </rich:column>
+        </rich:dataTable>
+    </h:form>
+    <br />
+
+    <h:form id="formBtnInicio">
+        <rich:panel>
+            <rich:menuItem label="Voltar ao Início" action="#{navigationBean.inicio()}" />
+        </rich:panel>
+    </h:form>
+
+    <rich:popupPanel id="messagePopup" modal="true" autosized="true" show="#{not empty facesContext.maximumSeverity}">
+        <f:facet name="header">
+            <h:outputText value="Mensagem do Sistema" />
+        </f:facet>
+
+        <h:messages globalOnly="false" redisplay="true" style="color: #333;" />
+
+        <h:form>
+            <h:commandButton value="Fechar" onclick="RichFaces.ui.PopupPanel.hide('messagePopup'); return false;">
+                <f:ajax listener="#{projetoController.limparCampos()}"
+                        render="formProjetoInput:titulo formProjetoInput:descricao formProjetoInput:dataInicio formProjetoInput:salvarTarefaBtn" />
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+    <rich:popupPanel id="visualizacaoPopup"
+                     modal="true"
+                     rendered="#{tarefaController.tarefaSelecionadaIdParaVisualizacao != null}"
+                     show="#{tarefaController.tarefaSelecionadaIdParaVisualizacao != null ? 'true' : 'false'}"
+                     onmaskclick="#{rich:component('visualizacaoPopup')}.hide();"
+                     width="600" style="flex: content; align-items: center; justify-content: center; justify-items: center">
+        <f:facet name="header">
+            <h:outputText value="Informações da Tarefa" />
+        </f:facet>
+
+        <h:form id="visualizacaoPopupForm">
+            <h:inputHidden id="tarefaSelecionadaIdParaVisualizacao" value="#{tarefaController.tarefaSelecionadaIdParaVisualizacao}" />
+        <h:form id="tarefasForm">
+        <h:panelGrid columns="2" cellpadding="5">
+            <h:outputLabel value="Detalhes do Projeto" style="font-weight: bold" />
+            <br />
+            <br />
+            <h:outputText value="Titulo:" />
+            <h:outputText value="#{tarefaController.projetoSelecionado.titulo}" />
+
+            <h:outputText value="Descrição:" />
+            <h:outputText value="#{tarefaController.projetoSelecionado.descricao}" />
+
+            <h:outputText value="Data de Início:" />
+            <h:outputText value="#{tarefaController.projetoSelecionado.dataInicio}" />
+        </h:panelGrid>
+
+            <h:panelGrid columns="2" cellpadding="5">
+                <h:outputLabel value="Detalhes da Tarefa" style="font-weight: bold" />
+                <br />
+                <br />
+            <h:outputText value="Título:" />
+            <h:outputText value="#{tarefaController.tarefaSelecionadaParaVisualizacao.titulo}" />
+
+            <h:outputText value="Descrição:" />
+            <h:outputText value="#{tarefaController.tarefaSelecionadaParaVisualizacao.descricao}" />
+
+            <h:outputText value="Prioridade:" />
+            <h:outputText value="#{tarefaController.tarefaSelecionadaParaVisualizacao.prioridade.descricao}" />
+
+            <h:outputText value="Estimativa de Horas:" />
+            <h:outputText value="#{tarefaController.tarefaSelecionadaParaVisualizacao.estimativaHoras}" />
+
+        </h:panelGrid>
+        </h:form>
+        </h:form>
+
+
+        <h:form>
+            <h:commandButton value="Fechar"
+                             onclick="RichFaces.ui.PopupPanel.hide('visualizacaoPopup'); return false;"
+                             action="#{tarefaController.fecharVisualizacaoPopup()}">
+                <f:ajax render="visualizacaoPopup" />
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+    <rich:popupPanel id="confirmacaoPopup"
+                     modal="true"
+                     rendered="#{tarefaController.tarefaSelecionadaId != null}"
+                     show="#{tarefaController.tarefaSelecionadaId != null ? 'true' : 'false'}"
+                     onmaskclick="#{rich:component('confirmacaoPopup')}.hide();"
+                     width="300" style="flex: content; align-items: center; justify-content: center; justify-items: center">
+        <f:facet name="header">
+            <h:outputText value="Confirmação de Exclusão" />
+        </f:facet>
+
+        <h:panelGrid columns="1" cellpadding="10">
+            <h:outputText value="Deseja realmente excluir esta tarefa?" />
+        </h:panelGrid>
+
+        <h:form id="confirmacaoForm">
+
+            <h:inputHidden id="tarefaSelecionadaId" value="#{tarefaController.tarefaSelecionadaId}" />
+
+            <h:commandButton value="Sim"
+                             action="#{tarefaController.excluirTarefa}"
+                             onclick="RichFaces.ui.PopupPanel.hide('confirmacaoPopup'); return false;">
+                <f:ajax
+                        render="confirmacaoForm:tarefaSelecionadaId" />
+            </h:commandButton>
+            <h:commandButton value="Não"
+                             action="#{tarefaController.cancelarExclusao}"
+                             onclick="RichFaces.ui.PopupPanel.hide('confirmacaoPopup'); return false;">
+                <f:ajax render="confirmacaoForm:tarefaSelecionadaId" />
+            </h:commandButton>
+        </h:form>
+    </rich:popupPanel>
+
+</h:body>
+</html>
