@@ -17,7 +17,7 @@
             <h:outputLabel for="titulo" value="Título:" />
                 <br />
                 <h:inputText id="titulo" value="#{projetoController.projetoSelecionado.titulo}"
-                             required="true" label="Título" requiredMessage="Insira o titulo do Projeto!">
+                             required="true" label="Título" requiredMessage="Insira o título do Projeto!">
                     <f:validateLength minimum="5" />
                 </h:inputText>
             </div>
@@ -36,7 +36,7 @@
             <h:inputText id="dataInicio"
                          value="#{projetoController.projetoSelecionado.dataInicio}"
                          required="true" label="Data de Início"
-                         requiredMessage="Insira a data de inicio do Projeto!">
+                         requiredMessage="Insira a data de início do Projeto!">
                 <f:converter converterId="dateConverter" />
             </h:inputText>
             </div>

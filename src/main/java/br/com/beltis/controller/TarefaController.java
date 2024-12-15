@@ -4,6 +4,7 @@ import br.com.beltis.model.Projeto;
 import br.com.beltis.model.Tarefa;
 import br.com.beltis.service.TarefaService;
 import br.com.beltis.utils.TiposDePrioridade;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -34,6 +35,9 @@ public class TarefaController extends BaseController implements Serializable {
 
     @PostConstruct
     public void init() {
+        if (tarefaService == null) {
+            LOG.error("tarefaService não foi injetado.");
+        }
         inicializarCampos();
     }
 
@@ -73,6 +77,18 @@ public class TarefaController extends BaseController implements Serializable {
                 tarefaService.adicionarTarefa(tarefaSelecionada);
                 adicionarMensagem("Tarefa adicionada com sucesso!", FacesMessage.SEVERITY_INFO);
             } else {
+                if(StringUtils.isBlank(tarefaSelecionada.getTitulo())) {
+                    adicionarMensagem("Insira o título do Projeto!", FacesMessage.SEVERITY_ERROR);
+                    return;
+                }
+                if(tarefaSelecionada.getPrioridade() == null) {
+                    adicionarMensagem("Indique a prioridade da Tarefa!", FacesMessage.SEVERITY_ERROR);
+                    return;
+                }
+                if(tarefaSelecionada.getEstimativaHoras() == null) {
+                    adicionarMensagem("Indique a estimativa (em horas) da Tarefa!", FacesMessage.SEVERITY_ERROR);
+                    return;
+                }
                 tarefaService.editarTarefa(tarefaSelecionada);
                 adicionarMensagem("Tarefa atualizada com sucesso!", FacesMessage.SEVERITY_INFO);
             }

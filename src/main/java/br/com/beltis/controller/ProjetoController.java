@@ -34,10 +34,10 @@ public class ProjetoController extends BaseController implements Serializable {
     @PostConstruct
     public void init() {
         if (projetoService == null) {
-            LOG.error("projetoService was not injected.");
+            LOG.error("projetoService não foi injetado.");
         }
         if (tarefaService == null) {
-            LOG.error("projetoService was not injected.");
+            LOG.error("tarefaService não foi injetado.");
         }
         inicializarCampos();
         listarProjetos();
@@ -64,11 +64,11 @@ public class ProjetoController extends BaseController implements Serializable {
                 adicionarMensagem("Projeto salvo com sucesso!", FacesMessage.SEVERITY_INFO);
             } else {
                 if(StringUtils.isBlank(projetoSelecionado.getTitulo())) {
-                    adicionarMensagem("Insira o titulo do Projeto!", FacesMessage.SEVERITY_ERROR);
+                    adicionarMensagem("Insira o título do Projeto!", FacesMessage.SEVERITY_ERROR);
                     return;
                 }
                 if(projetoSelecionado.getDataInicio() == null) {
-                    adicionarMensagem("Insira a data de inicio do Projeto!", FacesMessage.SEVERITY_ERROR);
+                    adicionarMensagem("Insira a data de início do Projeto!", FacesMessage.SEVERITY_ERROR);
                     return;
                 }
                 projetoService.editarProjeto(projetoSelecionado);
