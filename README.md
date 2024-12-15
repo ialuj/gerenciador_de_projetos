@@ -9,7 +9,7 @@ Para executar este projeto com sucesso precisa dos seguintes requisitos:
 3. Maven versão 3.x
 4. Servidor Aplicacional (Apache Tomcat - use este para um teste rápido, Jboss, WildFly)
 
-Baixe este projeto para qualquer diretório do seu computador
+Baixe este projeto para qualquer diretório do seu computador (O projeto está na branch master)
 Acessa ao diretório do projeto e permance mesmo na raíz
 
 Configure a base de dados, crie uma base de dados vazia pode atribuir qualquer nome a sua escolha.
