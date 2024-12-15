@@ -25,16 +25,19 @@ basededados - indique o nome da base de dados vazia que criou
 usuariodabasededados - o usuário que usa para aceder à base de dados
 senhadabasededados - a senha de acesso à base de dados
 
-E grave o arquivo e feche-o.
+Grave e feche o arquivo.
 
-Agora volte a raíz do projeto e compile-o e gera o pacote com o seguinte comando no terminal ou linha de comando na raíz do projeto.
+Agora volte a raíz do projeto e compile e gera o pacote com o seguinte comando no terminal ou linha de comando na raíz do projeto.
 
 "mvn clean install" ou "mvn clean package"
 
-Após a execução do comando acima, note que gerou-se uma pasta "target", pode aceder a essa pasta e copiar o arquivo war para o seu Servidor Aplicacional.
+Após a execução do comando acima, note que gerou-se uma pasta "target", pode acessar a essa pasta e copiar o arquivo war para o seu Servidor Aplicacional.
 
-Para Apache Tomcat jogue o arquivo com a extensão .war na pasta webapps.
+Por exemplo, para Apache Tomcat jogue o arquivo com a extensão .war na pasta webapps.
 
 Antes de executar o projeto, lembre-se de deixar o Sistema de Gerenciamento de Base de Dados online ou rodando, após isso pode executar o servidor aplicacional e verá que o
 Servidor Aplicacional abrirá automaticamente o navegador em http://localhost:8080/gerenciador_de_projetos (aqui a porta depende da configuração do seu servidor aplicacional)
 e pode adicionar, editar, excluir e visualizar projetos e suas tarefas.
+
+Caso o Servidor Aplicacional não abra automaticamente o projeto no navegador então pode aceder em http://localhost:8080/gerenciador_de_projetos (observe que a porta depende 
+da configuração do seu servidor)
