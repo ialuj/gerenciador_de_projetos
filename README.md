@@ -4,7 +4,7 @@ Gerenciador de Tarefas de Projetos com RichFaces
 
 Para executar este projeto com sucesso precisa dos seguintes requisitos:
 
-1. JDK ou JRE versão 8
+1. JDK ou JRE versão 8 ou superior
 2. MySQL versão 8.x
 3. Maven versão 3.x
 4. Servidor Aplicacional (Apache Tomcat - use este para um teste rápido, Jboss, WildFly)
