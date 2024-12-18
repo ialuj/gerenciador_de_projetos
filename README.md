@@ -4,7 +4,7 @@ Gerenciador de Tarefas de Projetos com RichFaces
 
 Para executar este projeto com sucesso precisa dos seguintes requisitos:
 
-1. JDK ou JRE versão 8 ou superior
+1. JDK versão 8
 2. MySQL versão 8.x
 3. Maven versão 3.x
 4. Servidor Aplicacional (Apache Tomcat - use este para um teste rápido, Jboss, WildFly)
@@ -14,11 +14,11 @@ Acessa ao diretório do projeto e permance mesmo na raíz
 
 Configure a base de dados, crie uma base de dados vazia pode atribuir qualquer nome a sua escolha.
 Por exemplo: gerenciador_de_projetos
-Acesse o arquivo "applicationContext.xml" localizado em src/main/resources e altere os seguintes valores:
+Acesse o arquivo "application.properties" localizado em src/main/resources e altere os seguintes valores:
 
-<property name="jdbcUrl" value="jdbc:mysql://localhost:porta/basededados"/>
-<property name="username" value="usuariodabasededados"/>
-<property name="password" value="senhadabasededados"/>
+spring.datasource.url=jdbc:mysql://localhost:porta/basededados
+spring.datasource.username=usuariodabasededados
+spring.datasource.password=senhadabasededados
 
 porta - indique a porta de acesso à base de dados
 basededados - indique o nome da base de dados vazia que criou
