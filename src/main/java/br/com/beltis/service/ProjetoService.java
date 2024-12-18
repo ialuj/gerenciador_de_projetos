@@ -1,7 +1,6 @@
 package br.com.beltis.service;
 
 import br.com.beltis.model.Projeto;
-import br.com.beltis.model.Tarefa;
 import br.com.beltis.repository.ProjetoRepository;
 import br.com.beltis.utils.MensagemException;
 import org.apache.commons.lang3.StringUtils;
@@ -10,7 +9,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

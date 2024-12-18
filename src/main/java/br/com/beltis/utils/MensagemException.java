@@ -6,7 +6,4 @@ public class MensagemException extends RuntimeException {
         super(mensagem);
     }
 
-    public MensagemException(String message, Throwable cause) {
-        super(message, cause);
-    }
 }

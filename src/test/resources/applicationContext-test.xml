@@ -1,30 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:tx="http://www.springframework.org/schema/tx"
-       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans-4.3.xsd
-           http://www.springframework.org/schema/tx
-           http://www.springframework.org/schema/tx/spring-tx.xsd
            http://www.springframework.org/schema/context
-           https://www.springframework.org/schema/context/spring-context.xsd"
-       profile="!test">
+           https://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="br.com.beltis" />
     <context:annotation-config />
-    <context:property-placeholder location="classpath:application.properties"/>
+    <context:property-placeholder location="classpath:application-test.properties"/>
 
-    <!-- DataSource Bean -->
-    <bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource">
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${spring.datasource.driver-class-name}"/>
-        <property name="jdbcUrl" value="${spring.datasource.url}"/>
+        <property name="url" value="${spring.datasource.url}"/>
         <property name="username" value="${spring.datasource.username}"/>
         <property name="password" value="${spring.datasource.password}"/>
-        <property name="maximumPoolSize" value="${spring.datasource.connection.maximumPoolSize}"/>
     </bean>
 
-    <!-- SessionFactory Bean -->
+    <bean id="dataSourceInitializer" class="org.springframework.jdbc.datasource.init.DataSourceInitializer">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="databasePopulator">
+            <bean class="org.springframework.jdbc.datasource.init.ResourceDatabasePopulator">
+                <property name="scripts">
+                    <list>
+                        <value>classpath:/db/schema.sql</value>
+                    </list>
+                </property>
+            </bean>
+        </property>
+    </bean>
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="br.com.beltis"/>
@@ -38,23 +44,16 @@
         </property>
     </bean>
 
-    <!-- TransactionManager Bean -->
     <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <!-- Liquibase Bean -->
-    <bean id="liquibase" class="liquibase.integration.spring.SpringLiquibase">
-        <property name="dataSource" ref="dataSource"/>
-        <property name="changeLog" value="classpath:db/liquibase-changelog.xml"/>
-        <property name="shouldRun" value="true"/>
     </bean>
 
     <bean id="environment" class="org.springframework.core.env.StandardEnvironment">
         <property name="activeProfiles" value="${spring.profiles.active}" />
     </bean>
 
-    <!-- Enable Transaction Management -->
+    <bean id="liquibase" class="org.springframework.beans.factory.support.BeanDefinitionRegistry" abstract="true" />
+
     <tx:annotation-driven/>
 
 </beans>

@@ -17,21 +17,6 @@
         <managed-bean-scope>view</managed-bean-scope>
     </managed-bean>
 
-    <validator>
-            <validator-id>dataValidator</validator-id>
-            <validator-class>br.com.beltis.validator.DataValidator</validator-class>
-    </validator>
-
-    <!--<converter>
-        <converter-for-class>br.com.beltis.utils.TiposDePrioridade</converter-for-class>
-        <converter-class>br.com.beltis.converter.TiposDePrioridadeConverter</converter-class>
-    </converter>-->
-
-    <!--<converter>
-      <converter-for-class>br.com.beltis.model.Projeto</converter-for-class>
-      <converter-class>br.com.beltis.converter.ProjetoConverter</converter-class>
-    </converter>-->
-
     <navigation-rule>
         <from-view-id>*</from-view-id>
         <navigation-case>

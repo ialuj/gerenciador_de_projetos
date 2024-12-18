@@ -51,13 +51,6 @@ public class Projeto implements Serializable {
         this.dataInicio = dataInicio;
     }
 
-    public Projeto(Long id, String titulo, String descricao, Date dataInicio) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.dataInicio = dataInicio;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }

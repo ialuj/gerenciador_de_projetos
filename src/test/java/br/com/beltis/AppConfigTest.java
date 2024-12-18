@@ -1,21 +1,21 @@
 package br.com.beltis;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.annotation.Profile;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import javax.sql.DataSource;
-
-import static org.junit.Assert.assertNotEquals;
-
-@Ignore
+@Configuration
+@ComponentScan("br.com.beltis")
+@EnableTransactionManagement
+@ImportResource("classpath:applicationContext-test.xml")
+@Profile("test")
 public class AppConfigTest {
 
-    @Test
-    public void contextLoads() {
-        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
-        assertNotEquals(context.getBean(DataSource.class), "DataSource should not be null");
+    public AppConfigTest() {
+        System.out.println("AppConfigTest carregado com sucesso!");
     }
+
 }
 

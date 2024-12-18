@@ -53,15 +53,6 @@ public class Tarefa implements Serializable {
         this.projeto = projeto;
     }
 
-    public Tarefa(Long id, String titulo, String descricao, TiposDePrioridade prioridade, Integer estimativaHoras, Projeto projeto) {
-        this.id = id;
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.prioridade = prioridade;
-        this.estimativaHoras = estimativaHoras;
-        this.projeto = projeto;
-    }
-
     public void setId(Long id) {
         this.id = id;
     }

@@ -20,7 +20,6 @@ public class DateConverter implements Converter {
             return null;
         }
         try {
-            // Converte o valor da string para uma instância de Date
             return formatter.parse(value);
         } catch (ParseException e) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,
@@ -36,7 +35,6 @@ public class DateConverter implements Converter {
             return "";
         }
         if (value instanceof Date) {
-            // Formata a instância de Date para o padrão dd/MM/yyyy
             return formatter.format((Date) value);
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR,

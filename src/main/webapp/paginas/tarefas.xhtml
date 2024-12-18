@@ -215,11 +215,11 @@
     </rich:popupPanel>
 
     <rich:popupPanel id="confirmacaoPopup"
-                     modal="true"
+                     modal="true" autosized="true"
                      rendered="#{tarefaController.tarefaSelecionadaId != null}"
                      show="#{tarefaController.tarefaSelecionadaId != null ? 'true' : 'false'}"
                      onmaskclick="#{rich:component('confirmacaoPopup')}.hide();"
-                     width="300" style="flex: content; align-items: center; justify-content: center; justify-items: center">
+                     width="300" height="50" style="flex: content; align-items: center; justify-content: center; justify-items: center">
         <f:facet name="header">
             <h:outputText value="Confirmação de Exclusão" />
         </f:facet>

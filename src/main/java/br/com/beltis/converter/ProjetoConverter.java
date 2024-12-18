@@ -28,7 +28,6 @@ public class ProjetoConverter implements Converter {
             return null;
         }
 
-        // Tentar injetar o repositório se a injeção padrão falhar
         if (projetoRepository == null) {
             projetoRepository = (ProjetoRepository) facesContext.getApplication()
                     .evaluateExpressionGet(facesContext, "#{projetoRepository}", ProjetoRepository.class);
@@ -51,7 +50,7 @@ public class ProjetoConverter implements Converter {
 
         if (value instanceof Projeto) {
             Projeto projeto = (Projeto) value;
-            return projeto.getId().toString();  // Retorna o ID como String
+            return projeto.getId().toString();
         }
 
         return "";

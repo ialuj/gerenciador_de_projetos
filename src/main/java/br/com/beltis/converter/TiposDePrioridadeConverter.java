@@ -16,7 +16,7 @@ public class TiposDePrioridadeConverter implements Converter {
             return null;
         }
         try {
-            return TiposDePrioridade.valueOf(value); // Assumindo que `name()` é usado para conversão
+            return TiposDePrioridade.valueOf(value);
         } catch (IllegalArgumentException e) {
             throw new RuntimeException("Erro ao converter valor para TiposDePrioridade: " + value, e);
         }
@@ -27,7 +27,7 @@ public class TiposDePrioridadeConverter implements Converter {
         if (value == null) {
             return "";
         }
-        return ((TiposDePrioridade) value).name(); // Retorna o nome do enum
+        return ((TiposDePrioridade) value).name();
     }
 }
 
